@@ -74,9 +74,40 @@ def verificar_e_criar_tabela_operacoes():
         print("Erro ao conectar ao SQLite:", error)
 
 
+def consulta_cadastro(usuario):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute(f"SELECT * FROM consultas WHERE ID = ?", (usuario,))
+    resultado = cursor.fetchone()
+    conn.close()
+    
+    return (resultado)
+
+
+def cadastro_cliente():
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        cpf = input("Digite o seu CPF: ")
+        Nome = input("Digite o seu Nome: ")
+        Sobrenome = input("Digite o seu Sobrenome: ")
+        Telefone = input("Digite o seu Telefone: [+55 (xx) x xxxx-xxxx] ")
+        Saldo = 0
+        Tipo = "Cliente"
+        Status = "Ativo"
+
+        cursor.execute("INSERT INTO consultas (ID, Nome, Sobrenome, Telefone, Saldo, Tipo, Status) VALUES (?,?,?,?,?,?,?)",(cpf,Nome,Sobrenome,Telefone,Saldo,Tipo,Status))
+
+        return print(f"{Nome}, o seu cadastro foi realizado.")
+    except sqlite3.Error as error:
+        print("Não foi possível encontrar o seu cadastro !")
+        return None
+
 ##administrador
 
-#cadastrar cliente VIP (sem limite)
+#ativar/desativar cadastro
 #cadastrar administrador
 #extrair informacoes de clientes
 #extrato de operacoes
@@ -99,16 +130,17 @@ verificar_e_criar_tabela_operacoes()
 
 #login digitar dados
 usuario = input("Digite o seu CPF: ")
-#verificar se os dados existem
-
-#se nao, cadastrar cliente
+Cliente = consulta_cadastro(usuario)
+if Cliente is None:
+    cadastrar = input("Deseja se cadastrar ? [S/N]")
+    if cadastrar == "S":
+        cadastro_cliente()
 
 #verificar cliente ou administrador
 
 
 ##cliente
 operacao = input('''
-Olá Cliente,
 Selecione a opção desejada:
 [1] Depósito
 [2] Saque
