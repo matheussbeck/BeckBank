@@ -73,6 +73,7 @@ def verificar_e_criar_tabela_operacoes():
     except sqlite3.Error as error:
         print("Erro ao conectar ao SQLite:", error)
 
+
 ##administrador
 
 #cadastrar cliente VIP (sem limite)
@@ -118,7 +119,25 @@ Selecione a opção desejada:
 ''')
 
 #deposito
+if operacao == 1:
+    deposito = float(input('Digite o valor que deseja depositar: R$ '))
+
 #saque (limite de saque)
-#conveter em outras moedas
+elif operacao == 2:
+    saque = float(input('Digite o valor que deseja Sacar: R$ '))
+
 #extrato
+elif operacao == 3:
+    print("Extrato do cliente")
+
+#conveter em outras moedas
+elif operacao == 4:
+    print("Calculadora de Câmbio")
+
+#sair do sistema
+elif operacao == 5:
+    print("sistema encerrado, até mais!")
+
 #encerrar conta
+elif operacao == 6:
+    print("Por favor, procure o Administrador")
