@@ -91,18 +91,21 @@ def cadastro_cliente():
         cursor = conn.cursor()
 
         cpf = input("Digite o seu CPF: ")
-        Nome = input("Digite o seu Nome: ")
-        Sobrenome = input("Digite o seu Sobrenome: ")
-        Telefone = input("Digite o seu Telefone: [+55 (xx) x xxxx-xxxx] ")
-        Saldo = 0
-        Tipo = "Cliente"
-        Status = "Ativo"
+        nome = input("Digite o seu Nome: ")
+        sobrenome = input("Digite o seu Sobrenome: ")
+        telefone = input("Digite o seu Telefone: [+55 xx xxxxx-xxxx] ")
+        saldo = 0
+        tipo = "Cliente"
+        status = "Ativo"
 
-        cursor.execute("INSERT INTO consultas (ID, Nome, Sobrenome, Telefone, Saldo, Tipo, Status) VALUES (?,?,?,?,?,?,?)",(cpf,Nome,Sobrenome,Telefone,Saldo,Tipo,Status))
+        print(f"Dados para inserção: CPF={cpf}, Nome={nome}, Sobrenome={sobrenome}, Telefone={telefone}, Saldo={saldo}, Tipo={tipo}, Status={status}")
 
-        return print(f"{Nome}, o seu cadastro foi realizado.")
+        cursor.execute("INSERT INTO consultas (ID, Nome, Sobrenome, Telefone, Saldo, Tipo, Status) VALUES (?,?,?,?,?,?,?)",(cpf, nome, sobrenome, telefone, saldo, tipo, status))
+        conn.commit()
+        conn.close()
+        return print(f"{nome}, o seu cadastro foi realizado.")
     except sqlite3.Error as error:
-        print("Não foi possível encontrar o seu cadastro !")
+        print("Não foi possível realizar o seu cadastro !")
         return None
 
 ##administrador
@@ -140,6 +143,7 @@ if Cliente is None:
 
 
 ##cliente
+print(f"Olá {Cliente[1]} {Cliente[2]}")
 operacao = input('''
 Selecione a opção desejada:
 [1] Depósito
